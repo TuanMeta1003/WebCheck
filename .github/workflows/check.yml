@@ -1,0 +1,15 @@
+name: Daily Cron Request
+
+on:
+  schedule:
+    - cron: '0 17 * * *'  # 0h sáng UTC+7
+  workflow_dispatch:      # Cho phép chạy thủ công
+
+jobs:
+  call_cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call url and show response
+        run: |
+          response=$(curl -s "${{ secrets.CRON_URL }}")
+          echo "$response"
