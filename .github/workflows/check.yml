@@ -2,14 +2,28 @@ name: Daily Cron Request
 
 on:
   schedule:
-    - cron: '0 17 * * *'  # 0h sáng UTC+7
-  workflow_dispatch:      # Cho phép chạy thủ công
+    - cron: '50 16 * * *'  # 16h50 UTC, chạy trước 10 phút
+  workflow_dispatch:        # Cho phép chạy thủ công
 
 jobs:
   call_cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Call url and show response
+      - name: Chờ tới đúng 17h UTC rồi thực thi
         run: |
+          echo "Đang chờ tới đúng 17h00 UTC..."
+          
+          while true; do
+            current_hour=$(date -u +"%H")
+            current_minute=$(date -u +"%M")
+
+            if [ "$current_hour" -eq 17 ] && [ "$current_minute" -eq 0 ]; then
+              break
+            fi
+
+            sleep 5
+          done
+
+          echo "Đúng 17h UTC, tiến hành gọi URL"
           response=$(curl -s "${{ secrets.CRON_URL }}")
           echo "$response"
