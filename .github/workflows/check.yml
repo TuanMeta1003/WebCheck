@@ -1,8 +1,8 @@
 name: Daily Cron Request
 
 on:
-  #schedule:
-    #- cron: '50 16 * * *'  # 16h50 UTC, chạy trước 10 phút
+  schedule:
+    - cron: '50 16 * * *'  # 16h50 UTC, chạy trước 10 phút
   workflow_dispatch:        # Cho phép chạy thủ công
 
 jobs:
